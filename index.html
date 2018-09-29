@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>nightSky</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html,body{
+            width: 100%;
+            background-color: black;
+            overflow: hidden;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="nightSky"></canvas>
+
+    <script>
+        var nightSky = document.getElementById('nightSky');
+        nightSky.width = window.innerWidth;
+        nightSky.height = window.innerHeight;
+        var ctx = nightSky.getContext('2d');
+        var n_star = 200;//星星数量
+        var stars = [];//用于存放星星对象
+
+        //创建星星对象
+        var Star = function(){
+            var x = Math.random()*window.innerWidth;
+            var y = Math.random()*window.innerHeight;
+            var color = "#fff";
+           
+            this.draw = function(){
+                ctx.fillStyle = this.color;
+                ctx.fillText('.',x,y); 
+            }
+            this.setColor = function(){
+                var r = Math.random();//用于创造随机颜色
+                if(r > 0.5)
+                    this.color = "#fff";
+                else
+                    this.color = "#111";
+            }
+        }
+
+        
+
+        window.onload = function(){
+            //画出初始状态的星星
+            for(var i = 0; i < n_star; i ++){
+                var star = new Star();
+                star.setColor();
+                star.draw();
+                stars.push(star);
+           }
+           
+           //让星星闪烁
+           playStar();
+        }
+
+        //让星星闪烁的方法
+        function playStar(){
+            for(var i = 0; i < n_star; i ++){
+                stars[i].setColor();
+                stars[i].draw();
+            }
+            setTimeout("playStar()",100);
+        }
+
+    
+    </script>
+</body>
+</html>
